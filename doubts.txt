@@ -1,0 +1,5 @@
+1 how can we create cart ? 
+2 how can we handle if quantity decresed to 0 ? clicked fastly 
+3 how can we update quantity ? , how can we increment quantity ? 
+4. is it mandatory to store CART items in server ? 
+

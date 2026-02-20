@@ -3,12 +3,13 @@ require("dotenv").config();
 
 const { connectDB } = require("./config/db");
 const env = require("./config/env");
-const globalErrorHandler=require("./middlewares/error.middleware")
+const globalErrorHandler = require("./middlewares/error.middleware");
 
 const authRoutes = require("./auth/auth.routes");
-const categoryRoutes=require("./category/category.routes")
-const productRoutes=require("./products/products.routes")
-const imageRoutes=require("./products/images/images.routes")
+const categoryRoutes = require("./category/category.routes");
+const productRoutes = require("./products/products.routes");
+const imageRoutes = require("./products/images/images.routes");
+const cartRoutes = require("./cart/cart.routes");
 
 const app = express();
 
@@ -19,12 +20,13 @@ connectDB();
 
 //AuthRoutes
 app.use("/api", authRoutes);
-app.use("/category",categoryRoutes);
-app.use("/product",productRoutes)
-app.use("/image",imageRoutes);
+app.use("/category", categoryRoutes);
+app.use("/product", productRoutes);
+app.use("/image", imageRoutes);
+app.use("/cart", cartRoutes);
 
-//global Eroor Handler 
-app.use(globalErrorHandler)
+//global Eroor Handler
+app.use(globalErrorHandler);
 
 const PORT = env.PORT;
 app.listen(PORT, () => {
