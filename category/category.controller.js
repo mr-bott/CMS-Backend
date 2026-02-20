@@ -10,17 +10,16 @@ const {
 } = require("./category.repository");
 
 exports.addCategory = asyncHandler(async (req, res, next) => {
-  const { name, employee_id } = req.body;
-
+  const { name} = req.body;
+  const { id}=req.user;
   // checking exist or not
   const category = await findCategoryByName(name);
 
   if (category.rows.length > 0) {
     return next(new customError("Category Already Exist", 400));
   }
-  //adding category
-  const result = await addCategory(name, employee_id);
-
+  // adding category
+  const result = await addCategory(name,id)
   if (result.rows.length > 0) {
     res.status(201).json({
       message: "Category added successfully",

@@ -1,8 +1,7 @@
 const { z } = require("zod");
 
 const addCategorySchema = z.object({
-  name: z.string("Invalid category"),
-  employee_id: z.uuid("Invalid UUID format")
+  name: z.string("Invalid category")
 });
 
 const  deletingCategorySchame = z.object({

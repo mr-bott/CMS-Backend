@@ -4,15 +4,17 @@ const {
   addProduct,
   findProductById,
   deleteProductById,
-  findProductByName,
+  findProductBySlug,
   getAllproducts,
+  updateProduct
 } = require("./products.repository");
 
+//add product
 exports.addProduct = asyncHandler(async (req, res, next) => {
-  const { seller_id, category_id, name, description, brand, price } = req.body;
+  const { seller_id, category_id, name, description, brand, price,product_slug } = req.body;
 
   // checking exist or not ? //unique - slug 
-  const productExist = await findProductByName(name);
+  const productExist = await findProductBySlug(product_slug);
 
   if (productExist.rows.length > 0) {
     return next(new customError("Product Already Exist", 400));
@@ -26,6 +28,7 @@ exports.addProduct = asyncHandler(async (req, res, next) => {
     description,
     brand,
     price,
+    product_slug
   );
 
   if (result.rows.length > 0) {
@@ -36,6 +39,40 @@ exports.addProduct = asyncHandler(async (req, res, next) => {
   }
 });
 
+//update product 
+//add product
+exports.updateProduct = asyncHandler(async (req, res, next) => {
+  const {id,seller_id, category_id, name, description, brand, price,product_slug } = req.body;
+
+  // checking exist or not ? //unique - slug 
+  const productExist = await findProductById(id);
+
+  if (productExist.rows.length === 0) {
+    return next(new customError("Product Not Exist", 400));
+  }
+
+  //adding category
+  const result = await updateProduct(
+    id,
+    seller_id,
+    category_id,
+    name,
+    description,
+    brand,
+    price,
+    product_slug
+  );
+
+  if (result.rows.length > 0) {
+    res.status(201).json({
+      message: "Product added successfully",
+      id: result.rows[0].id,
+    });
+  }
+});
+
+
+//all products
 exports.getAllProducts = asyncHandler(async (req, res, next) => {
   //getting all products
   const result = await getAllproducts();
@@ -69,6 +106,7 @@ exports.getProductById = asyncHandler(async (req, res, next) => {
   }
 });
 
+//delete Product by id 
 exports.deleteProduct = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 

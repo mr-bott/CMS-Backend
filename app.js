@@ -8,6 +8,7 @@ const globalErrorHandler=require("./middlewares/error.middleware")
 const authRoutes = require("./auth/auth.routes");
 const categoryRoutes=require("./category/category.routes")
 const productRoutes=require("./products/products.routes")
+const imageRoutes=require("./products/images/images.routes")
 
 const app = express();
 
@@ -20,6 +21,7 @@ connectDB();
 app.use("/api", authRoutes);
 app.use("/category",categoryRoutes);
 app.use("/product",productRoutes)
+app.use("/image",imageRoutes);
 
 //global Eroor Handler 
 app.use(globalErrorHandler)
